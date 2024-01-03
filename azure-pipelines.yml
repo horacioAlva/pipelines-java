@@ -24,4 +24,4 @@ steps:
 - task: CmdLine@2
   displayName: 'Ejecutar test'
   inputs:
-    script: 'newman run tests.json -e environment.json'        
+    script: 'newman run tests.json -e environment.json'       
