@@ -10,13 +10,14 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Maven@3
+- script: |
+    curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+  displayName: 'Install Postman CLI'
+
+- task: CmdLine@2
+  displayName: 'Run automated API tests using Postman CLI'
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    script: |
+        postman login --with-api-key $(POSTMAN_API_KEY)
+        # Run your collection using Postman CLI
+        postman collection run "17472979-1d0588a7-14e7-46d1-b8d3-8e26bf9e8dbd" -e "17472979-23fd2ac3-4745-43d9-9dbf-92acbcd28b83"
