@@ -16,10 +16,6 @@ steps:
   inputs:
     script: 'sudo npm install -g newman'
 
-- task: CmdLine@2
-  displayName: 'Instalar Newman-reporter'
-  inputs:
-    script: 'sudo npm install -h newman-reporter-htmlextra'
 
 - task: CmdLine@2
   displayName: 'Ejecutar test'
