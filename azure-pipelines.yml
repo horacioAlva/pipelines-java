@@ -7,17 +7,17 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'
 
 steps:
+- script: |
+    powershell.exe -NoProfile -InputFormat None -ExecutionPolicy AllSigned -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://dl-cli.pstmn.io/install/win64.ps1'))"
+  displayName: 'Install Postman CLI'
 
 - task: CmdLine@2
-  displayName: 'Instalar Newman'
+  displayName: 'Run automated API tests using Postman CLI'
   inputs:
-    script: 'sudo npm install -g newman'
-
-
-- task: CmdLine@2
-  displayName: 'Ejecutar test'
-  inputs:
-    script: 'newman run tests.json -e environment.json'       
+    script: |
+        postman login --with-api-key $(PMAK-65a021844277b9002a74723b-9c3f1645d22c9b03728de17187b749a4fb)
+        # Run your collection using Postman CLI
+        postman collection run "17472979-1d0588a7-14e7-46d1-b8d3-8e26bf9e8dbd" -e "17472979-23fd2ac3-4745-43d9-9dbf-92acbcd28b83"  
